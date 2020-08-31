@@ -89,7 +89,7 @@ function Profile(props) {
 				</Card>
 			</div>
 			<Button className={classes.item} variant="contained" color="secondary">
-				<Link to="/">SEE SMURF PROFILES</Link>
+				<Link to="/">BACK HOME</Link>
 			</Button>
 		</div>
 	);
