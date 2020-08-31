@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios'
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -11,21 +12,41 @@ import {
 	fetchDataFailure,
 	fetchDataSuccess,
 	APICall,
+	PostReq,
 } from "../Redux/Actions";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
 	},
 }));
 
-
-function SmurfVillage({ loading, data, error, APICall }) {
-    const classes = useStyles();
+function SmurfVillage({ loading, data, error, APICall, PostReq }) {
+	const defaultState = {
+		name: "",
+		height: "",
+		age: "",
+	};
+    const [newSmurf, setNewSmurf] = useState(defaultState);
+	const classes = useStyles();
 	const getSmurf = () => {
 		APICall();
+	};
+	const giveSmurf = (e) => {
+        e.preventDefault();
+        //const result = Object.values(newSmurf);
+        // console.log(result)
+    //    axios
+	// 				.post("http://localhost:3333/smurfs", newSmurf)
+	// 				.then((response) => {
+	// 					console.log(response.data);
+	// 				})
+	// 				.catch((error) => {
+	// 					console.log("this is error", error);
+	// 				});
+        PostReq(newSmurf);
 	};
 	return loading ? (
 		<h2> GETTING YOU YOUR SMURF</h2>
@@ -43,11 +64,38 @@ function SmurfVillage({ loading, data, error, APICall }) {
 				))}
 			</Grid>
 			<Grid item>
-				<form noValidate autoComplete="off">
-					<TextField id="outlined-basic" label="Name" variant="outlined" />
-					<TextField id="outlined-basic" label="Age" variant="outlined" />
-					<TextField id="outlined-basic" label="Height" variant="outlined" />
-					<Button variant="contained" color="primary">
+				<form onSubmit={giveSmurf}>
+					<TextField
+						onChange={(event) =>
+							setNewSmurf({ ...newSmurf, name: event.target.value })
+						}
+						id="outlined-basic"
+						//value={defaultState.name}
+						name="name"
+						label="Name"
+						variant="outlined"
+					/>
+					<TextField
+						onChange={(event) =>
+							setNewSmurf({ ...newSmurf, age: event.target.value })
+						}
+						id="outlined-basic"
+						//value={defaultState.age}
+						name="age"
+						label="Age"
+						variant="outlined"
+					/>
+					<TextField
+						onChange={(event) =>
+							setNewSmurf({ ...newSmurf, height: event.target.value })
+						}
+						id="outlined-basic"
+						//value={defaultState.height}
+						name="height"
+						label="Height"
+						variant="outlined"
+					/>
+					<Button variant="contained" color="primary" onClick={giveSmurf}>
 						ADD SMURF
 					</Button>
 				</form>
@@ -71,6 +119,7 @@ const mapDispatchToProps = {
 	fetchDataFailure,
 	fetchDataSuccess,
 	APICall,
+	PostReq,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmurfVillage);

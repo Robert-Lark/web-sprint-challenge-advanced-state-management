@@ -38,7 +38,7 @@ export const APICall = () => {
 		axios
 			.get("http://localhost:3333/smurfs")
 			.then((response) => {
-				const smurf = response;
+				const smurf = response.data;
 				console.log(smurf);
 				dispatch(fetchDataSuccess(smurf));
 			})
@@ -51,13 +51,11 @@ export const APICall = () => {
 
 export const PostReq = (data) => {
 	return (dispatch) => {
-		dispatch({});
 		axios
-			.post("http://localhost:3333/smurfs")
+			.post("http://localhost:3333/smurfs", data)
 			.then((response) => {
-				const smurf = response.data;
-				console.log(smurf);
-				dispatch(postSmurfSuccess(smurf));
+				console.log(response)
+				dispatch(postSmurfSuccess(data));
 			})
 			.catch((error) => {
 				console.log("oh uh", error);

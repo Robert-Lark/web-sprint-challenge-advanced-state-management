@@ -36,7 +36,7 @@ const Reducer = (state = initialState, action) => {
                     return {
                         ...state,
                         loading: false,
-                        data: [...data, action.payload]
+                        data: [...state.data, action.payload]
                     }
 		default:
 			return state;
