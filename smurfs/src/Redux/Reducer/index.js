@@ -1,12 +1,13 @@
 import {
-    FETCH_DATA_FAILURE,
-    FETCH_DATA_SUCCESS,
-    FETCH_SMURF_DATA,
+	FETCH_DATA_FAILURE,
+	FETCH_DATA_SUCCESS,
+	FETCH_SMURF_DATA,
+	POST_SMURF_SUCCESS,
 } from "../Actions/index";
 
 export const initialState = {
     loading: false,
-    data: [],
+    data: null,
     error: '',
 };
 
@@ -31,6 +32,12 @@ const Reducer = (state = initialState, action) => {
                     data: [],
                     error: action.payload,
                 }
+                case POST_SMURF_SUCCESS:
+                    return {
+                        ...state,
+                        loading: false,
+                        data: [...data, action.payload]
+                    }
 		default:
 			return state;
     }
