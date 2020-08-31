@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from 'axios'
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -36,16 +36,6 @@ function SmurfVillage({ loading, data, error, APICall, PostReq }) {
 	};
 	const giveSmurf = (e) => {
         e.preventDefault();
-        //const result = Object.values(newSmurf);
-        // console.log(result)
-    //    axios
-	// 				.post("http://localhost:3333/smurfs", newSmurf)
-	// 				.then((response) => {
-	// 					console.log(response.data);
-	// 				})
-	// 				.catch((error) => {
-	// 					console.log("this is error", error);
-	// 				});
         PostReq(newSmurf);
 	};
 	return loading ? (
@@ -100,12 +90,13 @@ function SmurfVillage({ loading, data, error, APICall, PostReq }) {
 					</Button>
 				</form>
 			</Grid>
+			<Button variant="contained" color="secondary">
+				<Link to="/profile">SEE SMURF PROFILES</Link>
+			</Button>
 		</Grid>
 	) : (
 		<div>
-			<Button onClick={getSmurf} variant="contained" color="secondary">
-				GET SMURF
-			</Button>
+			<Button onClick={getSmurf} variant="contained" color="secondary">GET SMURF</Button>
 		</div>
 	);
 }
